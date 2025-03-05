@@ -1,4 +1,4 @@
-.carousel-container {
+/*.carousel-container {
   display: flex;
   overflow: hidden;
   width: 100%;
@@ -162,6 +162,217 @@
   .modal-image-close-button::before,
   .modal-image-close-button::after {
     width: 15px;
+  }
+} */
+
+.carousel-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  position: relative;
+}
+
+.carousel-content {
+  display: flex;
+  transition: transform 0.3s ease;
+}
+
+.carousel-image {
+  width: auto;
+  height: clamp(150px, 20vw, 200px);
+  border-radius: 16px;
+  margin: clamp(5px, 1vw, 10px);
+  transition: transform 0.3s ease;
+}
+
+.carousel-image:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.modal-window-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 1000;
+}
+
+.modal-content-wrapper {
+  position: relative;
+  width: clamp(300px, 90vw, 800px);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-image-title {
+  padding: clamp(10px, 2vw, 15px);
+  background-color: #f8f8f8;
+  font-size: clamp(16px, 3vw, 20px);
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.modal-image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: calc(90vh - 120px);
+  padding: clamp(5px, 1vw, 15px);
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.modal-image-description {
+  padding: clamp(10px, 2vw, 15px);
+  background-color: #f8f8f8;
+  font-size: clamp(14px, 2vw, 16px);
+  text-align: center;
+  color: #000;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.modal-image-close-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: clamp(30px, 5vw, 40px);
+  height: clamp(30px, 5vw, 40px);
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  font-size: 0;
+  outline: none;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1010;
+}
+
+.modal-image-close-button::before,
+.modal-image-close-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 2px;
+  background-color: #333;
+}
+
+.modal-image-close-button::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.modal-image-close-button::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.modal-image-close-button:hover {
+  background: #4824ff;
+  transform: rotate(90deg);
+}
+
+.modal-image-close-button:hover::before,
+.modal-image-close-button:hover::after {
+  background-color: #fff;
+}
+
+/* Адаптивные точки перехода */
+@media (max-width: 1200px) {
+  .modal-content-wrapper {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 992px) {
+  .modal-content-wrapper {
+    width: 85vw;
+  }
+
+  .modal-image-container {
+    max-height: calc(80vh - 100px);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content-wrapper {
+    width: 90vw;
+    max-height: 85vh;
+  }
+
+  .modal-image-title {
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .modal-image-description {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .modal-image-container {
+    max-height: calc(70vh - 100px);
+  }
+
+  .carousel-image {
+    height: 175px;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-content-wrapper {
+    width: 95vw;
+    max-height: 80vh;
+  }
+
+  .modal-image-title {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .modal-image-description {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .modal-image-container {
+    max-height: calc(60vh - 80px);
+  }
+
+  .modal-image-close-button {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .carousel-image {
+    height: 150px;
+    margin: 5px;
   }
 }
 

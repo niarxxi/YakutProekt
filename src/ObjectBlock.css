@@ -1,4 +1,4 @@
-.image-gallery {
+/*.image-gallery {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,4 +60,137 @@
   background: none;
   scale: 0.7;
   height: 50px;
+} */
+
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 clamp(10px, 5vw, 50px);
+  box-sizing: border-box;
 }
+
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 20px);
+  max-height: calc(clamp(150px, 20vw, 200px) * var(--visible-rows) + clamp(10px, 2vw, 20px) * (var(--visible-rows) - 1));
+  overflow: hidden;
+  width: 100%;
+}
+
+.gallery-image {
+  width: auto;
+  height: clamp(150px, 20vw, 200px);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  object-fit: cover;
+}
+
+.gallery-image:hover {
+  transform: scale(1.05);
+}
+
+.show-more-button {
+  display: flex;
+  align-items: center;
+  font-size: clamp(16px, 3vw, 22px);
+  margin-top: clamp(10px, 2vw, 20px);
+  padding: clamp(8px, 1.5vw, 10px) clamp(15px, 2vw, 20px);
+  background-color: #4824ff;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+
+.show-more-button:hover {
+  background-color: #000;
+  filter: drop-shadow(0px 0px 30px #4824ff25);
+}
+
+.more-icon {
+  margin: -12px;
+  padding: 0;
+  position: relative;
+  content: url(/public/icons/array.png);
+  background: none;
+  scale: 0.7;
+  height: 50px;
+}
+
+/* Адаптивные точки перехода */
+@media (max-width: 1200px) {
+  .gallery-image {
+    height: 180px;
+  }
+}
+
+@media (max-width: 992px) {
+  .gallery-image {
+    height: 170px;
+  }
+
+  .image-gallery {
+    padding: 0 3vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-gallery {
+    padding: 0 2vw;
+  }
+
+  .gallery-image {
+    height: 160px;
+  }
+
+  .show-more-button {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .image-gallery {
+    padding: 0 1vw;
+  }
+
+  .image-grid {
+    gap: 10px;
+  }
+
+  .gallery-image {
+    height: 150px;
+  }
+
+  .show-more-button {
+    font-size: 16px;
+    padding: 8px 15px;
+  }
+
+  .more-icon {
+    scale: 0.6;
+  }
+}
+
+/* Для мобильных устройств в ландшафтном режиме */
+@media (max-height: 500px) and (orientation: landscape) {
+  .image-gallery {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .image-grid {
+    max-height: none;
+    flex: 1;
+  }
+
+  .gallery-image {
+    height: 120px;
+  }
+}
+

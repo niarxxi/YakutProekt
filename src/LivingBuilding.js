@@ -89,7 +89,7 @@ const LivingBuilding = () => {
         </div>
       ) : (
         <div>
-          <div className="filter-scrollbar" style={{ padding: "2vw", margin: "0" }}>
+          <div className="filter-scrollbar" style={{ padding: "2vw", margin: "0", gap: "2vw" }}>
             {renderImages()}
           </div>
           {selectedImage && (

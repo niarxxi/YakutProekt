@@ -55,9 +55,12 @@ const Carousel = ({ direction }) => {
   const isPortrait = Resize()
   const carouselRef = useRef(null)
   const [isHovered, setIsHovered] = useState(false)
+  const [isTouched, setIsTouched] = useState(false)
   const requestIdRef = useRef(null)
   const startPositionRef = useRef(0)
   const [selectedImage, setSelectedImage] = useState(null)
+  const [touchStartX, setTouchStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
 
   const closeModal = () => {
     setSelectedImage(null)
@@ -67,7 +70,7 @@ const Carousel = ({ direction }) => {
     const carousel = carouselRef.current
 
     const animate = () => {
-      if (!isHovered) {
+      if (!isHovered && !isTouched) {
         startPositionRef.current += direction === "left" ? -0.3 : 0.3
         if (startPositionRef.current >= carousel.scrollWidth / 2) {
           startPositionRef.current = 0
@@ -82,7 +85,28 @@ const Carousel = ({ direction }) => {
     requestIdRef.current = requestAnimationFrame(animate)
 
     return () => cancelAnimationFrame(requestIdRef.current)
-  }, [direction, isHovered])
+  }, [direction, isHovered, isTouched])
+
+  const handleTouchStart = (e) => {
+    setIsTouched(true)
+    setTouchStartX(e.touches[0].clientX)
+    setScrollLeft(carouselRef.current.scrollLeft)
+  }
+
+  const handleTouchMove = (e) => {
+    if (!isTouched) return
+    const x = e.touches[0].clientX
+    const walk = (x - touchStartX) * 2 // Множитель скорости прокрутки
+    carouselRef.current.scrollLeft = scrollLeft - walk
+  }
+
+  const handleTouchEnd = () => {
+    setIsTouched(false)
+    // Возобновление автопрокрутки после задержки
+    setTimeout(() => {
+      setIsTouched(false)
+    }, 1000)
+  }
 
   return (
     <div
@@ -90,23 +114,26 @@ const Carousel = ({ direction }) => {
       ref={carouselRef}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <div className="carousel-content">
         {images.map((image, index) => (
           <img
-            key={index}
-            src={image.src || "/placeholder.svg"}
+            key={`first-${index}`}
+            src={image.src}
             alt={image.title}
-            className={isPortrait ? "carousel-image" : "carousel-image mobile"}
+            className="carousel-image"
             onClick={() => setSelectedImage(image)}
           />
         ))}
         {images.map((image, index) => (
           <img
-            key={index}
-            src={image.src || "/placeholder.svg"}
+            key={`second-${index}`}
+            src={image.src}
             alt={image.title}
-            className={isPortrait ? "carousel-image" : "carousel-image mobile"}
+            className="carousel-image"
             onClick={() => setSelectedImage(image)}
           />
         ))}
@@ -116,11 +143,11 @@ const Carousel = ({ direction }) => {
           <div className="modal-content-wrapper" onClick={(e) => e.stopPropagation()}>
             <h3 className="modal-image-title">{selectedImage.title}</h3>
             <div className="modal-image-container">
-              <img src={selectedImage.src || "/placeholder.svg"} alt={selectedImage.title} className="modal-image" />
+              <img src={selectedImage.src} alt={selectedImage.title} className="modal-image" />
             </div>
             <p className="modal-image-description">{selectedImage.description}</p>
           </div>
-          <button onClick={closeModal} className="modal-image-close-button"></button>
+          <button onClick={closeModal} className="modal-image-close-button" aria-label="Закрыть"></button>
         </div>
       )}
     </div>
@@ -128,5 +155,3 @@ const Carousel = ({ direction }) => {
 }
 
 export default Carousel
-
-

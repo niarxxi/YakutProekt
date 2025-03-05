@@ -223,7 +223,7 @@ header a:hover {
 }
 
 .switch {
-  width: 102px;
+  width: 108px;
   height: 55px;
   border-radius: 13.5vw;
   background-color: var(--switch-background);
@@ -240,8 +240,8 @@ header a:hover {
 
 .theme {
   margin: 2px;
-  width: 48px;
-  height: 48px;
+  width: 51px;
+  height: 51px;
   border-radius: 13.5vw;
   background-color: var(--theme-background);
   transition: transform 0.5s ease-in-out;
@@ -264,12 +264,28 @@ header a:hover {
   content: url(/public/icons/moon.png);
 }
 
+@media (max-width: 1200px) {
+  header a {
+    font-size: 2vw;
+  }  
+}
+
+@media (max-width: 768px) {
+  header a {
+    font-size: 2.5vw;
+  }
+}
+
 /* WELCOME BLOCK */
 
 .welcome-block {
-  height: 1200px;
+  min-height: 70vh;
+  height: auto;
   display: flex;
   place-items: center;
+  padding-top: 13vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 .welcome-block.mobile {
@@ -360,15 +376,42 @@ header a:hover {
   0% { transform: rotate(-360deg); }
 }
 
+@media (min-width: 1400px) {
+  .welcome-block h1 {
+    font-size: 52px;
+  }
+  .welcome-block h2 {
+    font-size: 42px;
+  }
+  .welcome-block h3 {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-block h1 {
+    font-size: 6vw;
+  }
+  .welcome-block h2 {
+    font-size: 5vw;
+  }
+  .welcome-block h3 {
+    font-size: 3.5vw;
+  }
+}
+
 /* SERVICE BLOCK */
 
 .service-block {
-  height: 700px;
+  min-height: 70vh;
+  height: auto;
+  width: 100%;
   margin-left: -5vw;
   margin-right: -5vw;
   padding: 0 5vw;
   background: var(--service-background);
   align-content: center;
+  overflow: hidden;
 }
 
 .service-block.mobile {
@@ -412,10 +455,22 @@ header a:hover {
   content: url(/public/icons/check-dark.png);
 }
 
+@media (min-width: 1400px) {
+  .service-block .tag {
+    font-size: 24px;
+    padding: 8px 22px 8px 8px;
+    border-radius: 24px;
+    margin: 0 12px 12px 0;
+  }
+}
+
 /* OBJECT BLOCK */
 
 .object-block {
   height: auto;
+  padding: 5vh 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .object-block .first-block {
@@ -529,6 +584,29 @@ header a:hover {
 
 .filter-scrollbar::-webkit-scrollbar {
   height: 0px;
+}
+
+@media (min-width: 1400px) {
+  .object-block .main-title {
+    font-size: 56px;
+  }
+  
+  .object-block .title-border {
+    font-size: 56px;
+  }
+  
+  .gradient-part-one,
+  .gradient-part-two {
+    height: 70px;
+    width: 200px;
+  }
+  
+  .object-block .tag {
+    font-size: 20px;
+    padding: 8px 22px;
+    border-radius: 24px;
+    margin: 0 12px 12px 0;
+  }
 }
 
 /* REVIEW BLOCK */
