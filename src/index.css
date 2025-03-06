@@ -77,6 +77,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 24px;
+  color: #4824ff;
+}
+
 /* HEADER */
 
 header {
@@ -200,13 +210,13 @@ header a:hover {
   content: url(/public/icons/telegram-dark.png);
 }
 
-.icon.instagram.light,
-.icon.instagram.dark:hover {
-  content: url(/public/icons/instagram.png);
+.icon.whatsapp.light,
+.icon.whatsapp.dark:hover {
+  content: url(/public/icons/Whatsapp.png);
 }
 
-.icon.instagram.dark {
-  content: url(/public/icons/instagram-dark.png);
+.icon.whatsapp.dark {
+  content: url(/public/icons/Whatsapp-dark.png);
 }
 
 .icon-menu.light {
@@ -609,70 +619,71 @@ header a:hover {
   }
 }
 
-/* REVIEW BLOCK */
+/* DEPARTMENT BLOCK */
 
-.review-block {
+.department-block {
   margin: 80px 0px;
-  height: 580px;
+  height: 920px;
   background: #4824ff;
   border-radius: 28px;
 }
 
-.review-block.mobile {
-  height: 168vw;
+.department-block.mobile {
+  height: 430vw;
 }
 
-.review-block h1 {
+.department-block h1 {
   color: #fff;
   text-align: center;
   padding-top: 36px;
   font-size: 50px;
 }
 
-.review-block .description {
+.department-block .description {
   color: #fff;
   text-align: center;
   margin-top: -12px;
+  margin-left: 13px;
+  margin-right: 13px;
   font-size: 22px;
   line-height: 32px;
 }
 
-.review-block .description.mobile {
-  text-align: left;
+.department-block .description.mobile {
   margin-top: -4vw;
   font-size: 4.7vw;
   line-height: 6.5vw;
   margin: 7vw;
 }
 
-.review-block .selecting {
+.department-block .selecting {
   background: #fff;
   color: #000;
   margin: 0px 8px;
   font-weight: 500;
 }
 
-.review-carause1 {
+.department-carause1 {
   display: flex;
   justify-content: center;
   margin: auto;
   width: 1260px;
 }
 
-.review-carause1.mobile {
+.department-carause1.mobile {
   width: 100vw;
   margin-left: -5vw;
   margin-right: -5vw;
 }
 
-.review-container {
+.department-container {
   display: flex;
   overflow-x: scroll;
   scroll-behavior: smooth;
   overflow: hidden;
 }
 
-.review-container.mobile {
+.department-container.mobile {
   width: 100vw;
   margin: -8vw;
 }
@@ -708,77 +719,85 @@ header a:hover {
   filter: invert(100%);
 }
 
-.review-card {
+.department-card {
   min-width: 420px;
 }
 
-.review-card.mobile {
+.department-card.mobile {
   min-width: 100vw;
 }
 
-.review-content {
-  height: 230px;
+.department-content {
+  position: relative;
+  height: 450px;
   width: 384px;
   background: #fff;
   color: #000;
   border-radius: 24px;
   margin: 0 18px;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
-.review-content.mobile {
+.department-content.mobile {
   scale: 0.9;
   width: 90vw;
-  height: 72vw;
+  height: 130vw;
   margin: 5vw;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
-.review-block .review {
+.department-content::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+.department-content.has-overflow::after {
+  content: "";
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234824ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14'%3E%3C/path%3E%3Cpath d='M19 12l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.7;
+  pointer-events: none;
+  animation: bounce 2s infinite;
+}
+
+.department-content.has-overflow.scrolled-to-bottom::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234824ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19V5'%3E%3C/path%3E%3Cpath d='M5 12l7-7 7 7'%3E%3C/path%3E%3C/svg%3E");
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+.department-block .department {
   margin-top: auto;
   font-size: 19px;
   line-height: 27px;
   width: 90%;
 }
 
-.review-block .review.mobile {
+.department-block .department.mobile {
   font-size: 5.3vw;
   line-height: 6.7vw;
-}
-
-.review-block .link {
-  display: flex;
-  position: right;
-  height: 40px;
-  width: 70px;
-  background: #000;
-  border-radius: 24px;
-  cursor: pointer;
-  border: 2px solid #000;
-  transition: 0.5s ease-in-out;
-}
-
-.review-block .link:hover {
-  border: 2px double #4824ff;
-  filter: drop-shadow(0px 0px 25px #4824ff90);
-}
-
-.review-block .telegram-icon {
-  margin: -7px -4px;
-  padding: 0;
-  position: relative;
-  content: url(/public/icons/telegram.png);
-  background: none;
-  scale: 0.84;
-  height: 50px;
-}
-
-.review-block .array-corner-icon {
-  margin: -6px -18px;
-  padding: 0;
-  position: relative;
-  content: url(/public/icons/array-corner-icon.png);
-  background: none;
-  scale: 0.37;
-  height: 50px;
 }
 
 /* CONTACTS BLOCK */

@@ -46,18 +46,18 @@ const ModalWindow = ({ show, onClose, children }) => {
             aria-label="Close modal"
           ></button>
           {children}
-          <div style={{ display: "flex", scale: isPortrait ? '1' : '1.12', marginLeft: isPortrait ? '' : '8vw' }}>
+          <div style={{ display: "flex", scale: isPortrait ? '1' : '1.12', marginLeft: isPortrait ? '1vw' : '8vw' }}>
             <a href="https://t.me/" target="_blank" className="social-button">
               <a className="social telegram" />
               Telegram
             </a>
             <a
-              href="https://instagram.com"
+              href="https://whatsapp.com"
               target="_blank"
               className="social-button"
             >
-              <a className="social instagram" />
-              Instagram
+              <a className="social whatsapp" />
+              Whatsapp
             </a>
           </div>
         </div>
