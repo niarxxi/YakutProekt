@@ -33,7 +33,7 @@ const ModalMenu= ({ show, onClose, children }) => {
   return (
     <div
       className={`modal-menu-backdrop ${show ? "show" : ""}`}
-      style={{ display: isVisible }}
+      style={{ display: isVisible ? "flex" : "none" }}
       onClick={onClose}
     >
       <div className="modal-menu-content" onClick={(e) => e.stopPropagation()}>

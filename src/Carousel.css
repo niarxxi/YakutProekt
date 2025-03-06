@@ -41,7 +41,7 @@
 .modal-content-wrapper {
   position: relative;
   width: clamp(300px, 90vw, 800px);
-  max-height: 90vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #fff;

@@ -47,3 +47,9 @@
 .modal-menu-backdrop.show .modal-menu-content {
   transform: translateY(0);
 }
+
+.modal-menu-links {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

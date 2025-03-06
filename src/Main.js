@@ -7,6 +7,7 @@ import Resize from "./Resize"
 import Theme from "./Theme"
 import Department from "./Department"
 
+
 const AllGallery = lazy(() => import("./AllGallery"))
 const LivingBuilding = lazy(() => import("./LivingBuilding"))
 const SchoolInstitutions = lazy(() => import("./SchoolInstitutions"))
@@ -28,7 +29,7 @@ const Main = () => {
     scroll: 0,
   })
 
-
+  
   useEffect(() => {
     setUi((prev) => ({
       ...prev,
@@ -36,6 +37,7 @@ const Main = () => {
     }))
   }, [])
 
+ 
   const refs = {
     welcomeBlock: useRef(null),
     serviceBlock: useRef(null),
@@ -45,6 +47,7 @@ const Main = () => {
     container: useRef(null),
     departmentWidth: useRef(0),
   }
+
 
   const toggleTheme = useCallback(() => {
     const newIsDarkTheme = !ui.isDarkTheme
@@ -64,6 +67,7 @@ const Main = () => {
     setUi((prev) => ({ ...prev, selectedCategory: category }))
   }, [])
 
+  
   const scrollToRef = useCallback((ref) => {
     if (ref && ref.current) {
       const headerHeight = document.querySelector("header")?.offsetHeight || 0
@@ -81,6 +85,7 @@ const Main = () => {
     setUi((prev) => ({ ...prev, scroll: window.scrollY }))
   }, [])
 
+ 
   const visibleDepartments = 14
 
   const handleScroll = useCallback(() => {
@@ -112,6 +117,7 @@ const Main = () => {
     if (box) box.scrollLeft += refs.departmentWidth.current
   }, [])
 
+  
   const departments = useMemo(
     () => [
       <Department
@@ -188,6 +194,7 @@ const Main = () => {
     [],
   )
 
+  
   const renderComponent = useMemo(() => {
     return (
       <Suspense fallback={<div className="loading">Загрузка...</div>}>
@@ -217,6 +224,7 @@ const Main = () => {
     )
   }, [ui.selectedCategory])
 
+
   useEffect(() => {
     const box = refs.container.current
     if (!box) return
@@ -233,10 +241,12 @@ const Main = () => {
     }
   }, [handleScroll, refs.container.current, refs.departmentWidth.current])
 
+  
   useEffect(() => {
     window.addEventListener("scroll", scrollUp)
     return () => window.removeEventListener("scroll", scrollUp)
   }, [scrollUp])
+
 
   const TagItem = ({ selected, category, children }) => (
     <p
@@ -314,7 +324,7 @@ const Main = () => {
     ]
 
     return (
-      <div className={mobile ? "" : "menu"}>
+      <div className={mobile ? "modal-menu-links" : "menu"}>
         {links.map((link, index) => (
           <a
             key={index}
