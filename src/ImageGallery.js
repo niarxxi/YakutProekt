@@ -80,7 +80,7 @@ const ImageGallery = ({ images }) => {
         </div>
       ) : (
         <div>
-          <div className="filter-scrollbar" style={{ padding: "2vw", margin: "0", gap: "2vw" }}>
+          <div className="filter-scrollbar" style={{ padding: "7vw", margin: "0", gap: "2vw" }}>
             {renderedImages}
           </div>
           {renderModal}
