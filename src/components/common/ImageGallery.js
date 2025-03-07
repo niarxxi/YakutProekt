@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useMemo } from "react";
-import Resize from "./Resize";
+import Resize from "../../utils/Resize";
 import "./ObjectBlock.css";
 
 const ImageGallery = ({ images }) => {

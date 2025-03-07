@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import "./Carousel.css"
-import imageMetadata from "./imageMetadata"
+import imageMetadata from "../../utils/imageMetadata"
 
 const useIsInViewport = (ref) => {
   const [isIntersecting, setIsIntersecting] = useState(false)

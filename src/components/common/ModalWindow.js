@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./ModalWindow.css";
-import Resize from "./Resize";
+import Resize from "../../utils/Resize";
 
 const ModalWindow = ({ show, onClose, children }) => {
   const isPortrait = Resize();

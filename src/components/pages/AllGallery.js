@@ -1,6 +1,6 @@
 import React from "react";
-import Carousel from "./Carousel";
-import Resize from "./Resize";
+import Carousel from "../common/Carousel";
+import Resize from "../../utils/Resize";
 
 const AllGallery = () => {
   const isPortrait = Resize();

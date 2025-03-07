@@ -386,8 +386,15 @@ header a:hover {
   0% { transform: rotate(-360deg); }
 }
 
+@media (max-width: 1920px) {
+  .main-image-box {
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+}
+
 @media (min-width: 1400px) {
-  .welcome-block h1 {
+   .welcome-block h1 {
     font-size: 52px;
   }
   .welcome-block h2 {

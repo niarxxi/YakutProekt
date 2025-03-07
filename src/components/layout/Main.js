@@ -1,21 +1,21 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from "react"
-import ModalWindow from "./ModalWindow"
-import ModalMenu from "./ModalMenu"
-import Resize from "./Resize"
-import Theme from "./Theme"
+import ModalWindow from "../common/ModalWindow"
+import ModalMenu from "../common/ModalMenu"
+import Resize from "../../utils/Resize"
+import Theme from "../../utils/Theme"
 import Department from "./Department"
 
 
-const AllGallery = lazy(() => import("./AllGallery"))
-const LivingBuilding = lazy(() => import("./LivingBuilding"))
-const SchoolInstitutions = lazy(() => import("./SchoolInstitutions"))
-const HealthFacilities = lazy(() => import("./HealthFacilities"))
-const PublicBuildings = lazy(() => import("./PublicBuildings"))
-const SportBuildings = lazy(() => import("./SportBuildings"))
-const AgriculturalFacilities = lazy(() => import("./AgriculturalFacilities"))
-const GeneralPlans = lazy(() => import("./GeneralPlans"))
+const AllGallery = lazy(() => import("../pages/AllGallery"))
+const LivingBuilding = lazy(() => import("../pages/LivingBuilding"))
+const SchoolInstitutions = lazy(() => import("../pages/SchoolInstitutions"))
+const HealthFacilities = lazy(() => import("../pages/HealthFacilities"))
+const PublicBuildings = lazy(() => import("../pages/PublicBuildings"))
+const SportBuildings = lazy(() => import("../pages/SportBuildings"))
+const AgriculturalFacilities = lazy(() => import("../pages/AgriculturalFacilities"))
+const GeneralPlans = lazy(() => import("../pages/GeneralPlans"))
 
 const Main = () => {
   const isPortrait = Resize()
