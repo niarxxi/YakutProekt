@@ -807,6 +807,36 @@ header a:hover {
   line-height: 6.7vw;
 }
 
+@media (650px <= height <= 1120px) {
+  .department-block {
+    height: 75vw;
+  }
+
+  .department-block .description {
+    font-size: 1.7vw;
+    line-height: 2.5vw;
+  }
+
+  .department-carause1 {
+    width: 85vw;
+    margin-left: 4vw;
+  }
+
+  .department-card {
+    min-width: 28vw;
+  }
+
+  .department-content {
+    width: 23vw;
+    height: 30vw;
+  }
+  
+  .department-block .department {
+    font-size: 1.3vw;
+    line-height: 2vw;
+  }
+}
+
 /* CONTACTS BLOCK */
 
 .contacts-block {

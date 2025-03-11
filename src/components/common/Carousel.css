@@ -41,7 +41,7 @@
 .modal-content-wrapper {
   position: relative;
   width: clamp(300px, 90vw, 800px);
-  max-height: 100vh;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -51,6 +51,7 @@
 }
 
 .modal-image-title {
+  margin: 0;
   padding: clamp(10px, 2vw, 15px);
   background-color: #f8f8f8;
   font-size: clamp(16px, 3vw, 20px);
@@ -68,7 +69,6 @@
   justify-content: center;
   align-items: center;
   max-height: calc(90vh - 120px);
-  padding: clamp(5px, 1vw, 15px);
 }
 
 .modal-image {
@@ -78,6 +78,7 @@
 }
 
 .modal-image-description {
+  margin: 0;
   padding: clamp(10px, 2vw, 15px);
   background-color: #f8f8f8;
   font-size: clamp(14px, 2vw, 16px);
@@ -135,6 +136,12 @@
 }
 
 /* Адаптивные точки перехода */
+@media (650px <= height <= 895px) {
+  .modal-content-wrapper {
+    width: clamp(300px, 90vw, 511px);
+  }
+}
+
 @media (max-width: 1200px) {
   .modal-content-wrapper {
     width: 80vw;
