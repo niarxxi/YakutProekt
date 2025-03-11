@@ -48,7 +48,7 @@ const ModalWindow = ({ show, onClose, children }) => {
           {children}
           <div style={{ display: "flex", scale: isPortrait ? '1' : '1.12', marginLeft: isPortrait ? '1vw' : '8vw' }}>
             <a href="https://t.me/" target="_blank" className="social-button">
-              <a className="social telegram" />
+              <span className="social telegram" />
               Telegram
             </a>
             <a
@@ -56,7 +56,7 @@ const ModalWindow = ({ show, onClose, children }) => {
               target="_blank"
               className="social-button"
             >
-              <a className="social whatsapp" />
+              <span className="social whatsapp" />
               Whatsapp
             </a>
           </div>

@@ -259,7 +259,7 @@ const Main = () => {
 
   const TagWithIcon = ({ children }) => (
     <p className={isPortrait ? "tag" : "tag mobile"}>
-      <p
+      <span
         className={`tag-icon ${theme === "light" ? "tag-icon icon-dark" : "tag-icon icon-light"} ${isPortrait ? "" : "mobile"}`}
       />
       {children}
@@ -518,10 +518,10 @@ const Main = () => {
 
         <div style={{ display: "flex", justifyContent: "center" }}>
           <p className={isPortrait ? "next-button" : "next-button mobile"} style={{ transform: "rotate(180deg)" }}>
-            <p className="array-next-icon" onClick={btnPrevDepartment} />
+            <span className="array-next-icon" onClick={btnPrevDepartment} />
           </p>
           <p className={isPortrait ? "next-button" : "next-button mobile"}>
-            <p className="array-next-icon" onClick={btnNextDepartment} />
+            <span className="array-next-icon" onClick={btnNextDepartment} />
           </p>
         </div>
       </div>

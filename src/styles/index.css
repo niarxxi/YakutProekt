@@ -714,7 +714,7 @@ header a:hover {
   content: url(/public/icons/next-icon.png);
   scale: 0.7;
   height: 50px;
-  padding: 0 5px;
+  padding: 2px 5px;
   margin: auto;
 }
 
