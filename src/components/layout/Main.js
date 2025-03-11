@@ -1,12 +1,20 @@
 "use client"
 
 import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from "react"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import ModalWindow from "../common/ModalWindow"
 import ModalMenu from "../common/ModalMenu"
 import Resize from "../../utils/Resize"
 import Theme from "../../utils/Theme"
-import Department from "./Department"
-
+import { useDepartments } from "../../utils/departmentsData"
+import useBlockAnimations from "../../hooks/useBlockAnimations"
+import TagItem from "../ui/TagItem"
+import TagWithIcon from "../ui/TagWithIcon"
+import HeaderButtons from "../ui/HeaderButtons"
+import MobileHeaderButtons from "../ui/MobileHeaderButtons"
+import NavigationLinks from "../ui/NavigationLinks"
+import ModalWindowImage from "../ui/ModalWindowImage"
 
 const AllGallery = lazy(() => import("../pages/AllGallery"))
 const LivingBuilding = lazy(() => import("../pages/LivingBuilding"))
@@ -16,6 +24,9 @@ const PublicBuildings = lazy(() => import("../pages/PublicBuildings"))
 const SportBuildings = lazy(() => import("../pages/SportBuildings"))
 const AgriculturalFacilities = lazy(() => import("../pages/AgriculturalFacilities"))
 const GeneralPlans = lazy(() => import("../pages/GeneralPlans"))
+
+// Регистрируем плагин ScrollTrigger
+gsap.registerPlugin(ScrollTrigger)
 
 const Main = () => {
   const isPortrait = Resize()
@@ -27,9 +38,9 @@ const Main = () => {
     selectedCategory: "All",
     isDarkTheme: false,
     scroll: 0,
+    modalImage: null,
   })
 
-  
   useEffect(() => {
     setUi((prev) => ({
       ...prev,
@@ -37,7 +48,6 @@ const Main = () => {
     }))
   }, [])
 
- 
   const refs = {
     welcomeBlock: useRef(null),
     serviceBlock: useRef(null),
@@ -48,11 +58,24 @@ const Main = () => {
     departmentWidth: useRef(0),
   }
 
-
   const toggleTheme = useCallback(() => {
     const newIsDarkTheme = !ui.isDarkTheme
     setUi((prev) => ({ ...prev, isDarkTheme: newIsDarkTheme }))
-    setTheme(newIsDarkTheme ? "dark" : "light")
+
+    // Анимация переключения темы
+    const elements = document.querySelectorAll("body, .tag, .point, h1, h2, h3, p")
+    gsap.to(elements, {
+      opacity: 0.5,
+      duration: 0.2,
+      onComplete: () => {
+        setTheme(newIsDarkTheme ? "dark" : "light")
+        gsap.to(elements, {
+          opacity: 1,
+          duration: 0.3,
+          delay: 0.1,
+        })
+      },
+    })
   }, [ui.isDarkTheme, setTheme])
 
   const handleModal = useCallback((show) => {
@@ -67,7 +90,6 @@ const Main = () => {
     setUi((prev) => ({ ...prev, selectedCategory: category }))
   }, [])
 
-  
   const scrollToRef = useCallback((ref) => {
     if (ref && ref.current) {
       const headerHeight = document.querySelector("header")?.offsetHeight || 0
@@ -85,7 +107,6 @@ const Main = () => {
     setUi((prev) => ({ ...prev, scroll: window.scrollY }))
   }, [])
 
- 
   const visibleDepartments = 14
 
   const handleScroll = useCallback(() => {
@@ -105,126 +126,58 @@ const Main = () => {
       box.scrollLeft = width
       box.style.scrollBehavior = "smooth"
     }
-  }, [])
+  }, [refs.container, refs.departmentWidth, visibleDepartments])
 
   const btnPrevDepartment = useCallback(() => {
     const box = refs.container.current
     if (box) box.scrollLeft -= refs.departmentWidth.current
-  }, [])
+  }, [refs.container, refs.departmentWidth])
 
   const btnNextDepartment = useCallback(() => {
     const box = refs.container.current
     if (box) box.scrollLeft += refs.departmentWidth.current
+  }, [refs.container, refs.departmentWidth])
+
+  const handleImageModal = useCallback((imageData) => {
+    setUi((prev) => ({ ...prev, modalImage: imageData }))
   }, [])
 
-  
-  const departments = useMemo(
-    () => [
-      <Department
-        key={1}
-        name="Архитектурно-планировочный отдел, технологический отдел"
-        text="Отдел занимается превращением идей архитектора в конкретные чертежи и планы зданий. Они работают на раннем этапе создания проектов, следуя принципам пользы, прочности и красоты. Их задача — перевести творческие замыслы архитектора в техническую документацию, которая будет использована для строительства."
-      />,
-      <Department
-        key={2}
-        name="Отдел генеральных планов"
-        text="Отдел занимается разработкой генеральных планов для городов и поселков. Они создают схемы развития населенных пунктов, определяя где и как будут располагаться здания, улицы и районы. Этот отдел сохранил опытных специалистов, которые умеют планировать целые города, хотя обычно такая работа выполняется на государственном уровне."
-      />,
-      <Department
-        key={3}
-        name="Строительный отдел"
-        text="Строительный отдел в иснтитуте выполняет проектные работы по строительной части объектов гражданского, общественного и промышленного назначения. Отдел разрабатывает проекты как на новое строительство, так и на реконструкцию и техническое перевооружение построенных объектов, обеспечивая безопасность и надежность зданий и сооружений."
-      />,
-      <Department
-        key={4}
-        name="Инженерный отдел"
-        text="Инженерный отдел занимается проектированием всех инженерных систем для зданий. Они разрабатывают планы для отопления, вентиляции, водоснабжения, канализации, теплоснабжения, газоснабжения и решают вопросы охраны окружающей среды. Это большой отдел с разными специалистами, которые могут спроектировать все технические системы даже для сложных объектов."
-      />,
-      <Department
-        key={5}
-        name="Электротехнический отдел"
-        text="Отдел занимается проектированием всех электрических и автоматизированных систем в зданиях. Они разрабатывают планы для электроснабжения, освещения, автоматизации инженерных систем, а также систем связи, сигнализации и противопожарной безопасности. Проще говоря, они отвечают за все, что связано с электричеством и электронными системами в здании."
-      />,
-      <Department
-        key={6}
-        name="Отдел автомобильных дорог"
-        text="Отдел проектирует автомобильные дороги, мосты, аэродромы и разные гидротехнические сооружения."
-      />,
-      <Department
-        key={7}
-        name="Отдел расчетов и инвестиций"
-        text="Отдел расчетов и инвестиций занимается подсчетом стоимости строительства. Они определяют, сколько будет стоить построить здание или сооружение, сколько денег нужно вложить в проект, и какой будет окончательная цена по договору. Также они разрабатывают планы организации строительных работ и демонтажа старых зданий. По сути, этот отдел отвечает за финансовую сторону строительных проектов."
-      />,
-      <Department
-        key={8}
-        name="Отдел САПР и группа дизайна"
-        text="В обязанности отдела входит обслуживание компьютерной и печатной техники, разработка прикладных программ по автоматизации инженерных расчетов, поддержка используемых в проектировании программ."
-      />,
-      <Department
-        key={9}
-        name="Отдел изысканий"
-        text="Основными видами деятельности отдела являются инженерно-геодезические и инженерно-геологические изыскания для строительства зданий и сооружений I и II уровней ответственности."
-      />,
-      <Department
-        key={10}
-        name="Инжиниринговый отдел"
-        text="Инжиниринговый отдел следит за строительством по проектам института. Это включает авторский надзор, чтобы всё строилось согласно задумке проектировщиков. Отдел контролирует качество работ подрядчиков на стройплощадке, взаимодействует с заказчиками и изучает рынок новых строительных материалов и технологий. Отдел обеспечивает правильное воплощение проектов в реальность."
-      />,
-      <Department
-        key={11}
-        name="Административно-управленческий персонал"
-        text="Отдел кадров занимается расстановкой персонала в институте, обеспечивая эффективную работу всех подразделений. Секретариат отвечает за документооборот института, ведение архива и поддержание связи между заказчиками и партнерами организации."
-      />,
-      <Department
-        key={12}
-        name="Финансово-экономический отдел"
-        text="ФЭО служит центром финансово-экономической информации и аналитической поддержки руководства. Через этот отдел проходят все информационные потоки, связанные с финансами института. Здесь собираются и анализируются все данные о финансово-хозяйственной деятельности, что позволяет отделу наиболее точно оценивать текущее положение института и перспективы достижения поставленных целей."
-      />,
-      <Department
-        key={13}
-        name="Технический отдел"
-        text="Основными задачами отдела является техническое руководство и организация технологии проектирования, повышение качества и производительности труда основного персонала."
-      />,
-      <Department
-        key={14}
-        name="Хозяйственный и транспортный отделы"
-        text="В обязанности отдела входят: организация материально-технического обеспечения и складского хозяйства, уборка и охрана помещений, переплет документов и курьерская служба."
-      />,
-    ],
-    [],
-  )
+  const closeImageModal = useCallback(() => {
+    setUi((prev) => ({ ...prev, modalImage: null }))
+  }, [])
 
-  
+  const departments = useDepartments()
+
   const renderComponent = useMemo(() => {
     return (
       <Suspense fallback={<div className="loading">Загрузка...</div>}>
         {(() => {
           switch (ui.selectedCategory) {
             case "All":
-              return <AllGallery />
+              return <AllGallery onImageClick={handleImageModal} />
             case "LivingBuilding":
-              return <LivingBuilding />
+              return <LivingBuilding onImageClick={handleImageModal} />
             case "SchoolInstitutions":
-              return <SchoolInstitutions />
+              return <SchoolInstitutions onImageClick={handleImageModal} />
             case "HealthFacilities":
-              return <HealthFacilities />
+              return <HealthFacilities onImageClick={handleImageModal} />
             case "PublicBuildings":
-              return <PublicBuildings />
+              return <PublicBuildings onImageClick={handleImageModal} />
             case "SportBuildings":
-              return <SportBuildings />
+              return <SportBuildings onImageClick={handleImageModal} />
             case "AgriculturalFacilities":
-              return <AgriculturalFacilities />
+              return <AgriculturalFacilities onImageClick={handleImageModal} />
             case "GeneralPlans":
-              return <GeneralPlans />
+              return <GeneralPlans onImageClick={handleImageModal} />
             default:
-              return <AllGallery />
+              return <AllGallery onImageClick={handleImageModal} />
           }
         })()}
       </Suspense>
     )
-  }, [ui.selectedCategory])
+  }, [ui.selectedCategory, handleImageModal])
 
-
+  // Инициализация карусели отделов
   useEffect(() => {
     const box = refs.container.current
     if (!box) return
@@ -239,114 +192,52 @@ const Main = () => {
     return () => {
       box.removeEventListener("scroll", handleScroll)
     }
-  }, [handleScroll, refs.container.current, refs.departmentWidth.current])
+  }, [handleScroll, refs.container, refs.departmentWidth, visibleDepartments])
 
-  
+  // Вызываем хук на верхнем уровне компонента
+  const {
+    setupWelcomeAnimations,
+    setupServiceAnimations,
+    setupObjectAnimations,
+    setupDepartmentAnimations,
+    setupContactsAnimations,
+    setupCommonAnimations,
+  } = useBlockAnimations(refs, isPortrait)
+
+  // Затем используем результаты хука в useEffect
   useEffect(() => {
     window.addEventListener("scroll", scrollUp)
-    return () => window.removeEventListener("scroll", scrollUp)
-  }, [scrollUp])
 
+    // Настройка анимаций для каждого блока
+    setupWelcomeAnimations()
+    setupServiceAnimations()
+    setupObjectAnimations()
+    setupDepartmentAnimations()
+    setupContactsAnimations()
+    setupCommonAnimations()
 
-  const TagItem = ({ selected, category, children }) => (
-    <p
-      className={`tag ${ui.selectedCategory === category ? "selected" : ""} ${isPortrait ? "" : "mobile"}`}
-      onClick={() => setSelectedCategory(category)}
-    >
-      {children}
-    </p>
-  )
-
-  const TagWithIcon = ({ children }) => (
-    <p className={isPortrait ? "tag" : "tag mobile"}>
-      <span
-        className={`tag-icon ${theme === "light" ? "tag-icon icon-dark" : "tag-icon icon-light"} ${isPortrait ? "" : "mobile"}`}
-      />
-      {children}
-    </p>
-  )
-
-  const HeaderButtons = () => (
-    <div className="header-buttons">
-      <button onClick={() => handleModal(true)} className="btn">
-        Связаться
-      </button>
-
-      <a
-        href="https://t.me/"
-        target="_blank"
-        className={theme === "light" ? "icon telegram light" : "icon telegram dark"}
-        rel="noreferrer"
-      ></a>
-      <a
-        href="https://whatsapp.com/"
-        target="_blank"
-        className={theme === "light" ? "icon whatsapp light" : "icon whatsapp dark"}
-        rel="noreferrer"
-      ></a>
-
-      <div className="switch" onClick={toggleTheme}>
-        <div
-          className={theme === "light" ? "theme light" : "theme dark"}
-          style={{
-            transform: ui.isDarkTheme ? "translateX(38px)" : "translate(0)",
-          }}
-        ></div>
-      </div>
-    </div>
-  )
-
-  const MobileHeaderButtons = () => (
-    <div className="header-buttons-mobile">
-      <a
-        href="https://t.me/"
-        target="_blank"
-        className={theme === "light" ? "icon icon-mobile telegram light" : "icon icon-mobile telegram dark"}
-        rel="noreferrer"
-      ></a>
-      <a
-        href="https://whatsapp.com/"
-        target="_blank"
-        className={theme === "light" ? "icon icon-mobile whatsapp light" : "icon icon-mobile whatsapp dark"}
-        rel="noreferrer"
-      ></a>
-      <a onClick={() => handleModalMenu(true)} className={theme === "light" ? "icon-menu light" : "icon-menu dark"}></a>
-    </div>
-  )
-
-  const NavigationLinks = ({ onClickHandler, mobile }) => {
-    const links = [
-      { ref: refs.welcomeBlock, text: "О Фирме" },
-      { ref: refs.serviceBlock, text: "Услуги" },
-      { ref: refs.objectBlock, text: "Объекты" },
-      { ref: refs.departmentBlock, text: "Отделы" },
-      { ref: refs.contactsBlock, text: "Контакты" },
-    ]
-
-    return (
-      <div className={mobile ? "modal-menu-links" : "menu"}>
-        {links.map((link, index) => (
-          <a
-            key={index}
-            onClick={() => {
-              scrollToRef(link.ref)
-              if (onClickHandler) onClickHandler()
-            }}
-          >
-            {link.text}
-          </a>
-        ))}
-      </div>
-    )
-  }
+    // Очистка ScrollTrigger при размонтировании компонента
+    return () => {
+      window.removeEventListener("scroll", scrollUp)
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
+  }, [
+    scrollUp,
+    setupWelcomeAnimations,
+    setupServiceAnimations,
+    setupObjectAnimations,
+    setupDepartmentAnimations,
+    setupContactsAnimations,
+    setupCommonAnimations,
+  ])
 
   return (
     <div>
       <header style={{ zIndex: "2" }}>
         {isPortrait ? (
           <div className="navigation">
-            <NavigationLinks />
-            <HeaderButtons />
+            <NavigationLinks refs={refs} scrollToRef={scrollToRef} />
+            <HeaderButtons handleModal={handleModal} theme={theme} toggleTheme={toggleTheme} ui={ui} />
           </div>
         ) : (
           <div className="navigation">
@@ -358,7 +249,7 @@ const Main = () => {
                 }}
               ></div>
             </div>
-            <MobileHeaderButtons />
+            <MobileHeaderButtons handleModalMenu={handleModalMenu} theme={theme} />
           </div>
         )}
       </header>
@@ -373,8 +264,11 @@ const Main = () => {
       </ModalWindow>
 
       <ModalMenu show={ui.showModalMenu} onClose={() => handleModalMenu(false)}>
-        <NavigationLinks onClickHandler={() => handleModalMenu(false)} mobile />
+        <NavigationLinks onClickHandler={() => handleModalMenu(false)} mobile refs={refs} scrollToRef={scrollToRef} />
       </ModalMenu>
+
+      {/* Модальное окно для изображений */}
+      <ModalWindowImage show={ui.modalImage !== null} onClose={closeImageModal} imageData={ui.modalImage || {}} />
 
       {/* Welcome Block */}
       <div className={`welcome-block ${!isPortrait ? "mobile" : ""}`} ref={refs.welcomeBlock}>
@@ -423,29 +317,45 @@ const Main = () => {
         </p>
 
         <div style={{ display: isPortrait ? "flex" : "" }}>
-          <TagWithIcon>Проекты планировок и застроек</TagWithIcon>
-          <TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            Проекты планировок и застроек
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
             На новое строительство, расширение, реконструкция и техническое перевооружение действующих предприятий
           </TagWithIcon>
-          <TagWithIcon>На строительство городских инженерных сооружений и коммуникаций</TagWithIcon>
-          <TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            На строительство городских инженерных сооружений и коммуникаций
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
             На строительство наружных и внутренних инженерных сетей тепло и водоснабжения, канализации,
             электроснабжения, связи, газоснабжения и сооружений на них
           </TagWithIcon>
         </div>
         <div style={{ display: isPortrait ? "flex" : "", marginTop: isPortrait ? "16px" : "" }}>
-          <TagWithIcon>На строительство котельных, установок холодоснабжений, очистных сооружений и.т.п.</TagWithIcon>
-          <TagWithIcon>Геодезические и геологические работы в строительстве</TagWithIcon>
-          <TagWithIcon>Техническое обследование зданий и сооружений</TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            На строительство котельных, установок холодоснабжений, очистных сооружений и.т.п.
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            Геодезические и геологические работы в строительстве
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            Техническое обследование зданий и сооружений
+          </TagWithIcon>
         </div>
 
         <p style={{ fontSize: isPortrait ? "27px" : "6vw" }}>Кадастровые услуги:</p>
 
         <div style={{ display: isPortrait ? "flex" : "" }}>
-          <TagWithIcon>Запрос любых кадастровых сведений на интересующие земельные участки</TagWithIcon>
-          <TagWithIcon>Составление межевых планов на любые виды кадастровых работ</TagWithIcon>
-          <TagWithIcon>Разработка карт (планов) на объекты землеустройства</TagWithIcon>
-          <TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            Запрос любых кадастровых сведений на интересующие земельные участки
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            Составление межевых планов на любые виды кадастровых работ
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
+            Разработка карт (планов) на объекты землеустройства
+          </TagWithIcon>
+          <TagWithIcon isPortrait={isPortrait} theme={theme}>
             Анализ межевых планов получивших отказ (приостановку) при осуществлении государственного учета
           </TagWithIcon>
         </div>
@@ -476,14 +386,70 @@ const Main = () => {
               width: "90vw",
             }}
           >
-            <TagItem category="All">Все работы</TagItem>
-            <TagItem category="LivingBuilding">Жилые дома</TagItem>
-            <TagItem category="SchoolInstitutions">Дошкольные и школьные учреждения</TagItem>
-            <TagItem category="HealthFacilities">Объекты здравоохранения</TagItem>
-            <TagItem category="PublicBuildings">Административные и общественные здания</TagItem>
-            <TagItem category="SportBuildings">Спортивные сооружения</TagItem>
-            <TagItem category="AgriculturalFacilities">Объекты сельского хозяйства</TagItem>
-            <TagItem category="GeneralPlans">Генеральные планы</TagItem>
+            <TagItem
+              category="All"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Все работы
+            </TagItem>
+            <TagItem
+              category="LivingBuilding"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Жилые дома
+            </TagItem>
+            <TagItem
+              category="SchoolInstitutions"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Дошкольные и школьные учреждения
+            </TagItem>
+            <TagItem
+              category="HealthFacilities"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Объекты здравоохранения
+            </TagItem>
+            <TagItem
+              category="PublicBuildings"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Административные и общественные здания
+            </TagItem>
+            <TagItem
+              category="SportBuildings"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Спортивные сооружения
+            </TagItem>
+            <TagItem
+              category="AgriculturalFacilities"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Объекты сельского хозяйства
+            </TagItem>
+            <TagItem
+              category="GeneralPlans"
+              isPortrait={isPortrait}
+              selectedCategory={ui.selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            >
+              Генеральные планы
+            </TagItem>
           </div>
         </div>
         <div className="content" style={{ marginLeft: "-5vw", marginRight: "-5vw" }}>
@@ -580,4 +546,5 @@ const Main = () => {
   )
 }
 
-export default Main;
+export default Main
+

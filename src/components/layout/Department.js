@@ -59,7 +59,6 @@ const Department = (props) => {
 
     content.addEventListener("scroll", handleScroll, { passive: true })
 
-
     if (typeof ResizeObserver !== "undefined") {
       resizeObserver.current = new ResizeObserver(checkOverflowAndScroll)
       resizeObserver.current.observe(content)
@@ -108,4 +107,4 @@ const Department = (props) => {
   )
 }
 
-export default Department;
+export default Department

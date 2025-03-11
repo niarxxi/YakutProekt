@@ -444,6 +444,7 @@ header a:hover {
   margin: 0 12px 0 0;
   padding: 8px 22px 8px 8px;
   border-radius: 24px;
+  cursor: pointer;
 }
 
 .service-block .tag.mobile {
@@ -511,7 +512,6 @@ header a:hover {
 
 .object-block .main-title.mobile {
   font-size: 28px;
-  margin-left: 3vw;
   z-index: 1;
 }
 
@@ -807,7 +807,7 @@ header a:hover {
   line-height: 6.7vw;
 }
 
-@media (650px <= height <= 1120px) {
+@media (450px <= height <= 1120px) {
   .department-block {
     height: 75vw;
   }
@@ -837,6 +837,23 @@ header a:hover {
   }
 }
 
+@media (max-width: 768px) {
+  .department-card {
+    width: 100%; /* Полная ширина контейнера */
+    margin: 0;
+    flex-shrink: 0;
+  }
+  
+  .departments-container {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .department-card {
+    scroll-snap-align: center;
+  }
+}
+
 /* CONTACTS BLOCK */
 
 .contacts-block {
@@ -852,6 +869,7 @@ header a:hover {
 .contacts-points {
   list-style-type: none;
   padding-left: 20px;
+  cursor: pointer;
 }
 
 .contacts-points li {
@@ -944,6 +962,7 @@ header a:hover {
 .requisite-points {
   list-style-type: none;
   padding-left: 20px;
+  cursor: pointer;
 }
 
 .requisite-points li {
