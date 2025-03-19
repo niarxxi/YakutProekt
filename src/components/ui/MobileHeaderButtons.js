@@ -5,7 +5,7 @@ import React from "react"
 const MobileHeaderButtons = ({ handleModalMenu, theme }) => (
   <div className="header-buttons-mobile">
     <a
-      href="https://t.me/"
+      href="https://t.me/yakutproekt_bot"
       target="_blank"
       className={theme === "light" ? "icon icon-mobile telegram light" : "icon icon-mobile telegram dark"}
       rel="noreferrer"
