@@ -9,7 +9,7 @@ const HeaderButtons = ({ handleModal, theme, toggleTheme, ui }) => (
     </button>
 
     <a
-      href="https://t.me/"
+      href="https://t.me/yakutproekt_bot"
       target="_blank"
       className={theme === "light" ? "icon telegram light" : "icon telegram dark"}
       rel="noreferrer"

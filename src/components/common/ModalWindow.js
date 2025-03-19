@@ -47,7 +47,7 @@ const ModalWindow = ({ show, onClose, children }) => {
           ></button>
           {children}
           <div style={{ display: "flex", scale: isPortrait ? '1' : '1.12', marginLeft: isPortrait ? '1vw' : '8vw' }}>
-            <a href="https://t.me/" target="_blank" className="social-button">
+            <a href="https://t.me/yakutproekt_bot" target="_blank" className="social-button">
               <span className="social telegram" />
               Telegram
             </a>

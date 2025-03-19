@@ -505,7 +505,7 @@ const Main = () => {
             <span style={{ color: "#4824ff" }}>Тел/Факс:</span> (4112) 34-15-09
           </li>
           <li className={theme === "light" ? "point email" : "point email-dark"}>
-            <span style={{ color: "#4824ff" }}>E-mail:</span> info@yakutproekt.ru
+            <span style={{ color: "#4824ff" }}>E-mail:</span> yakutproekt@mail.ru
           </li>
         </ol>
 
