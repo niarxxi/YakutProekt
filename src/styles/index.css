@@ -238,7 +238,6 @@ header a:hover {
   height: 55px;
   border-radius: 13.5vw;
   background-color: var(--switch-background);
-  border: 1px solid var(--main-elements-color);
   overflow: hidden;
   cursor: pointer;
   position: relative;
@@ -253,12 +252,7 @@ header a:hover {
   margin: 2px;
   width: 51px;
   height: 51px;
-  border-radius: 13.5vw;
-  background-color: var(--theme-background);
   transition: transform 0.5s ease-in-out;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .theme-mobile {
@@ -574,7 +568,7 @@ header a:hover {
 }
 
 .object-block .tag.mobile {
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .object-block .tag:hover {
@@ -807,6 +801,23 @@ header a:hover {
   font-size: 5.3vw;
   line-height: 6.7vw;
 }
+@media (max-width: 1740px) {
+  .department-block {
+    height: 950px;
+  }
+}
+
+@media (max-width: 1625px) {
+  .department-block {
+    height: 980px;
+  }
+}
+
+@media (max-width: 1561px) {
+  .department-block {
+    height: 1010px;
+  }
+}
 
 @media (450px <= height <= 1120px) {
   .department-block {
@@ -865,6 +876,7 @@ header a:hover {
 .contacts-block.mobile {
   height: 240vw;
   font-size: 6vw;
+  padding-bottom: 10px;
 }
 
 .contacts-points {
